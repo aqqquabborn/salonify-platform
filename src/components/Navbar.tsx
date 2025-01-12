@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { ShoppingCart, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AuthDialog } from "./AuthDialog";
 
 export const Navbar = () => {
   const location = useLocation();
@@ -34,6 +35,7 @@ export const Navbar = () => {
                 <User className="h-5 w-5" />
               </Button>
             </Link>
+            <AuthDialog />
           </div>
         </div>
       </div>
