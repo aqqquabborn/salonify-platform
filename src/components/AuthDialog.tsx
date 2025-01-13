@@ -56,7 +56,7 @@ export const AuthDialog = () => {
 
   if (showOTP) {
     return (
-      <Dialog>
+      <Dialog open={showOTP}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Введите код подтверждения</DialogTitle>
@@ -72,7 +72,7 @@ export const AuthDialog = () => {
               render={({ slots }) => (
                 <InputOTPGroup>
                   {slots.map((slot, index) => (
-                    <InputOTPSlot key={index} {...slot} />
+                    <InputOTPSlot key={index} {...slot} index={index} />
                   ))}
                 </InputOTPGroup>
               )}
