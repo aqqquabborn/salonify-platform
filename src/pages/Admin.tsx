@@ -19,11 +19,19 @@ import { Label } from "@/components/ui/label";
 
 const Admin = () => {
   const { toast } = useToast();
+  
+  // Product state
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productCategory, setProductCategory] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productImage, setProductImage] = useState<File | null>(null);
+
+  // Service state
+  const [serviceName, setServiceName] = useState("");
+  const [servicePrice, setServicePrice] = useState("");
+  const [serviceCategory, setServiceCategory] = useState("");
+  const [serviceDescription, setServiceDescription] = useState("");
   const [serviceImage, setServiceImage] = useState<File | null>(null);
 
   const handleCreateProduct = () => {
@@ -38,7 +46,7 @@ const Admin = () => {
       title: "Продукт создан",
       description: `${productName} успешно создан`,
     });
-    // Reset form
+    // Reset product form
     setProductName("");
     setProductPrice("");
     setProductCategory("");
@@ -48,21 +56,21 @@ const Admin = () => {
 
   const handleCreateService = () => {
     console.log("Creating service:", {
-      productName,
-      productPrice,
-      productCategory,
-      productDescription,
+      serviceName,
+      servicePrice,
+      serviceCategory,
+      serviceDescription,
       serviceImage,
     });
     toast({
       title: "Услуга создана",
-      description: `Услуга ${productName} успешно создана`,
+      description: `Услуга ${serviceName} успешно создана`,
     });
-    // Reset form
-    setProductName("");
-    setProductPrice("");
-    setProductCategory("");
-    setProductDescription("");
+    // Reset service form
+    setServiceName("");
+    setServicePrice("");
+    setServiceCategory("");
+    setServiceDescription("");
     setServiceImage(null);
   };
 
@@ -142,30 +150,30 @@ const Admin = () => {
                 <div>
                   <Input
                     placeholder="Название услуги"
-                    value={productName}
-                    onChange={(e) => setProductName(e.target.value)}
+                    value={serviceName}
+                    onChange={(e) => setServiceName(e.target.value)}
                   />
                 </div>
                 <div>
                   <Input
                     type="number"
                     placeholder="Цена"
-                    value={productPrice}
-                    onChange={(e) => setProductPrice(e.target.value)}
+                    value={servicePrice}
+                    onChange={(e) => setServicePrice(e.target.value)}
                   />
                 </div>
                 <div>
                   <Input
                     placeholder="Категория"
-                    value={productCategory}
-                    onChange={(e) => setProductCategory(e.target.value)}
+                    value={serviceCategory}
+                    onChange={(e) => setServiceCategory(e.target.value)}
                   />
                 </div>
                 <div>
                   <Textarea
                     placeholder="Описание"
-                    value={productDescription}
-                    onChange={(e) => setProductDescription(e.target.value)}
+                    value={serviceDescription}
+                    onChange={(e) => setServiceDescription(e.target.value)}
                   />
                 </div>
                 <div className="space-y-2">
