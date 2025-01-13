@@ -15,6 +15,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
+import { Label } from "@/components/ui/label";
 
 const Admin = () => {
   const { toast } = useToast();
@@ -22,6 +23,8 @@ const Admin = () => {
   const [productPrice, setProductPrice] = useState("");
   const [productCategory, setProductCategory] = useState("");
   const [productDescription, setProductDescription] = useState("");
+  const [productImage, setProductImage] = useState<File | null>(null);
+  const [serviceImage, setServiceImage] = useState<File | null>(null);
 
   const handleCreateProduct = () => {
     console.log("Creating product:", {
@@ -29,6 +32,7 @@ const Admin = () => {
       productPrice,
       productCategory,
       productDescription,
+      productImage,
     });
     toast({
       title: "Продукт создан",
@@ -39,6 +43,7 @@ const Admin = () => {
     setProductPrice("");
     setProductCategory("");
     setProductDescription("");
+    setProductImage(null);
   };
 
   const handleCreateService = () => {
@@ -47,6 +52,7 @@ const Admin = () => {
       productPrice,
       productCategory,
       productDescription,
+      serviceImage,
     });
     toast({
       title: "Услуга создана",
@@ -57,6 +63,7 @@ const Admin = () => {
     setProductPrice("");
     setProductCategory("");
     setProductDescription("");
+    setServiceImage(null);
   };
 
   const handleDeleteUser = (userId: string) => {
@@ -112,6 +119,15 @@ const Admin = () => {
                     onChange={(e) => setProductDescription(e.target.value)}
                   />
                 </div>
+                <div className="space-y-2">
+                  <Label htmlFor="product-image">Изображение продукта</Label>
+                  <Input
+                    id="product-image"
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setProductImage(e.target.files?.[0] || null)}
+                  />
+                </div>
                 <Button className="w-full" onClick={handleCreateProduct}>
                   Создать продукт
                 </Button>
@@ -152,6 +168,15 @@ const Admin = () => {
                     onChange={(e) => setProductDescription(e.target.value)}
                   />
                 </div>
+                <div className="space-y-2">
+                  <Label htmlFor="service-image">Изображение услуги</Label>
+                  <Input
+                    id="service-image"
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setServiceImage(e.target.files?.[0] || null)}
+                  />
+                </div>
                 <Button className="w-full" onClick={handleCreateService}>
                   Создать услугу
                 </Button>
@@ -167,7 +192,6 @@ const Admin = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {/* Пример списка пользователей */}
                 <div className="flex justify-between items-center p-4 border rounded">
                   <div>
                     <p className="font-medium">user@example.com</p>
