@@ -3,7 +3,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
 
 const Admin = () => {
   const { toast } = useToast();
@@ -13,10 +24,15 @@ const Admin = () => {
   const [productDescription, setProductDescription] = useState("");
 
   const handleCreateProduct = () => {
-    console.log("Creating product:", { productName, productPrice, productCategory, productDescription });
+    console.log("Creating product:", {
+      productName,
+      productPrice,
+      productCategory,
+      productDescription,
+    });
     toast({
-      title: "Product Created",
-      description: `${productName} has been created successfully`,
+      title: "Продукт создан",
+      description: `${productName} успешно создан`,
     });
     // Reset form
     setProductName("");
@@ -26,10 +42,15 @@ const Admin = () => {
   };
 
   const handleCreateService = () => {
-    console.log("Creating service:", { productName, productPrice, productCategory, productDescription });
+    console.log("Creating service:", {
+      productName,
+      productPrice,
+      productCategory,
+      productDescription,
+    });
     toast({
-      title: "Service Created",
-      description: `${productName} service has been created successfully`,
+      title: "Услуга создана",
+      description: `Услуга ${productName} успешно создана`,
     });
     // Reset form
     setProductName("");
@@ -38,91 +59,134 @@ const Admin = () => {
     setProductDescription("");
   };
 
+  const handleDeleteUser = (userId: string) => {
+    toast({
+      title: "Пользователь удален",
+      description: `Пользователь ${userId} успешно удален`,
+    });
+  };
+
   return (
     <div className="container py-8">
-      <h1 className="font-display text-4xl mb-8">Admin Panel</h1>
-      
-      <div className="grid md:grid-cols-2 gap-8">
-        <Card>
-          <CardHeader>
-            <CardTitle>Create Product</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <Input
-                placeholder="Product Name"
-                value={productName}
-                onChange={(e) => setProductName(e.target.value)}
-              />
-            </div>
-            <div>
-              <Input
-                type="number"
-                placeholder="Price"
-                value={productPrice}
-                onChange={(e) => setProductPrice(e.target.value)}
-              />
-            </div>
-            <div>
-              <Input
-                placeholder="Category"
-                value={productCategory}
-                onChange={(e) => setProductCategory(e.target.value)}
-              />
-            </div>
-            <div>
-              <Textarea
-                placeholder="Description"
-                value={productDescription}
-                onChange={(e) => setProductDescription(e.target.value)}
-              />
-            </div>
-            <Button className="w-full" onClick={handleCreateProduct}>
-              Create Product
-            </Button>
-          </CardContent>
-        </Card>
+      <h1 className="font-display text-4xl mb-8">Панель администратора</h1>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Create Service</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <Input
-                placeholder="Service Name"
-                value={productName}
-                onChange={(e) => setProductName(e.target.value)}
-              />
-            </div>
-            <div>
-              <Input
-                type="number"
-                placeholder="Price"
-                value={productPrice}
-                onChange={(e) => setProductPrice(e.target.value)}
-              />
-            </div>
-            <div>
-              <Input
-                placeholder="Category"
-                value={productCategory}
-                onChange={(e) => setProductCategory(e.target.value)}
-              />
-            </div>
-            <div>
-              <Textarea
-                placeholder="Description"
-                value={productDescription}
-                onChange={(e) => setProductDescription(e.target.value)}
-              />
-            </div>
-            <Button className="w-full" onClick={handleCreateService}>
-              Create Service
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
+      <Tabs defaultValue="products" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="products">Управление продуктами</TabsTrigger>
+          <TabsTrigger value="users">Управление пользователями</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="products">
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card>
+              <CardHeader>
+                <CardTitle>Создать продукт</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Input
+                    placeholder="Название продукта"
+                    value={productName}
+                    onChange={(e) => setProductName(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Input
+                    type="number"
+                    placeholder="Цена"
+                    value={productPrice}
+                    onChange={(e) => setProductPrice(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Input
+                    placeholder="Категория"
+                    value={productCategory}
+                    onChange={(e) => setProductCategory(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Textarea
+                    placeholder="Описание"
+                    value={productDescription}
+                    onChange={(e) => setProductDescription(e.target.value)}
+                  />
+                </div>
+                <Button className="w-full" onClick={handleCreateProduct}>
+                  Создать продукт
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Создать услугу</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Input
+                    placeholder="Название услуги"
+                    value={productName}
+                    onChange={(e) => setProductName(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Input
+                    type="number"
+                    placeholder="Цена"
+                    value={productPrice}
+                    onChange={(e) => setProductPrice(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Input
+                    placeholder="Категория"
+                    value={productCategory}
+                    onChange={(e) => setProductCategory(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Textarea
+                    placeholder="Описание"
+                    value={productDescription}
+                    onChange={(e) => setProductDescription(e.target.value)}
+                  />
+                </div>
+                <Button className="w-full" onClick={handleCreateService}>
+                  Создать услугу
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="users">
+          <Card>
+            <CardHeader>
+              <CardTitle>Пользователи</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {/* Пример списка пользователей */}
+                <div className="flex justify-between items-center p-4 border rounded">
+                  <div>
+                    <p className="font-medium">user@example.com</p>
+                    <p className="text-sm text-muted-foreground">
+                      Зарегистрирован: 01.01.2024
+                    </p>
+                  </div>
+                  <Button
+                    variant="destructive"
+                    onClick={() => handleDeleteUser("1")}
+                  >
+                    Удалить
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

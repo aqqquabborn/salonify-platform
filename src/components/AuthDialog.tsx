@@ -10,37 +10,100 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 
 export const AuthDialog = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showOTP, setShowOTP] = useState(false);
+  const [otp, setOtp] = useState("");
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement actual auth logic
+    // Генерируем 6-значный код
+    const code = Math.floor(100000 + Math.random() * 900000);
+    console.log("Generated code:", code);
     toast({
-      title: isLogin ? "Logged in successfully" : "Registered successfully",
-      description: "Welcome to BeautySalon!",
+      title: "Код подтверждения",
+      description: `Ваш код: ${code}. Запомните его для входа в систему.`,
+    });
+    setShowOTP(true);
+  };
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast({
+      title: "Успешный вход",
+      description: "Добро пожаловать в систему!",
     });
   };
+
+  const handleOTPSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast({
+      title: "Регистрация завершена",
+      description: "Вы успешно зарегистрировались!",
+    });
+    setShowOTP(false);
+    setIsLogin(true);
+  };
+
+  if (showOTP) {
+    return (
+      <Dialog>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Введите код подтверждения</DialogTitle>
+            <DialogDescription>
+              Введите 6-значный код, который был отправлен вам
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleOTPSubmit} className="space-y-4">
+            <InputOTP
+              value={otp}
+              onChange={setOtp}
+              maxLength={6}
+              render={({ slots }) => (
+                <InputOTPGroup>
+                  {slots.map((slot, index) => (
+                    <InputOTPSlot key={index} {...slot} />
+                  ))}
+                </InputOTPGroup>
+              )}
+            />
+            <Button type="submit" className="w-full">
+              Подтвердить
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
+    );
+  }
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Sign In</Button>
+        <Button variant="outline">Войти</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{isLogin ? "Login" : "Register"}</DialogTitle>
+          <DialogTitle>{isLogin ? "Вход" : "Регистрация"}</DialogTitle>
           <DialogDescription>
             {isLogin
-              ? "Welcome back! Please login to your account."
-              : "Create an account to get started."}
+              ? "Добро пожаловать! Войдите в свой аккаунт."
+              : "Создайте аккаунт, чтобы начать."}
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+        <form
+          onSubmit={isLogin ? handleLogin : handleRegister}
+          className="space-y-4 mt-4"
+        >
           <div className="space-y-2">
             <Input
               type="email"
@@ -53,7 +116,7 @@ export const AuthDialog = () => {
           <div className="space-y-2">
             <Input
               type="password"
-              placeholder="Password"
+              placeholder="Пароль"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -65,9 +128,9 @@ export const AuthDialog = () => {
               variant="link"
               onClick={() => setIsLogin(!isLogin)}
             >
-              {isLogin ? "Need an account?" : "Already have an account?"}
+              {isLogin ? "Нужен аккаунт?" : "Уже есть аккаунт?"}
             </Button>
-            <Button type="submit">{isLogin ? "Login" : "Register"}</Button>
+            <Button type="submit">{isLogin ? "Войти" : "Регистрация"}</Button>
           </div>
         </form>
       </DialogContent>
