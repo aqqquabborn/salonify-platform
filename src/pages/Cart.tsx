@@ -7,7 +7,11 @@ import { useToast } from "@/components/ui/use-toast";
 const Cart = () => {
   const { toast } = useToast();
   const [showCheckout, setShowCheckout] = useState(false);
-  const [address, setAddress] = useState({
+  const [personalInfo, setPersonalInfo] = useState({
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
     street: "",
     city: "",
     zipCode: "",
@@ -29,7 +33,7 @@ const Cart = () => {
             <div className="flex items-center space-x-4">
               <img
                 src="/placeholder.svg"
-                alt="Product"
+                alt="Товар"
                 className="w-20 h-20 rounded-md"
               />
               <div>
@@ -75,24 +79,54 @@ const Cart = () => {
             ) : (
               <div className="mt-6 space-y-4">
                 <Input
-                  placeholder="Улица"
-                  value={address.street}
+                  placeholder="Имя"
+                  value={personalInfo.firstName}
                   onChange={(e) =>
-                    setAddress({ ...address, street: e.target.value })
+                    setPersonalInfo({ ...personalInfo, firstName: e.target.value })
+                  }
+                />
+                <Input
+                  placeholder="Фамилия"
+                  value={personalInfo.lastName}
+                  onChange={(e) =>
+                    setPersonalInfo({ ...personalInfo, lastName: e.target.value })
+                  }
+                />
+                <Input
+                  placeholder="Телефон"
+                  type="tel"
+                  value={personalInfo.phone}
+                  onChange={(e) =>
+                    setPersonalInfo({ ...personalInfo, phone: e.target.value })
+                  }
+                />
+                <Input
+                  placeholder="Email"
+                  type="email"
+                  value={personalInfo.email}
+                  onChange={(e) =>
+                    setPersonalInfo({ ...personalInfo, email: e.target.value })
+                  }
+                />
+                <Input
+                  placeholder="Улица"
+                  value={personalInfo.street}
+                  onChange={(e) =>
+                    setPersonalInfo({ ...personalInfo, street: e.target.value })
                   }
                 />
                 <Input
                   placeholder="Город"
-                  value={address.city}
+                  value={personalInfo.city}
                   onChange={(e) =>
-                    setAddress({ ...address, city: e.target.value })
+                    setPersonalInfo({ ...personalInfo, city: e.target.value })
                   }
                 />
                 <Input
                   placeholder="Индекс"
-                  value={address.zipCode}
+                  value={personalInfo.zipCode}
                   onChange={(e) =>
-                    setAddress({ ...address, zipCode: e.target.value })
+                    setPersonalInfo({ ...personalInfo, zipCode: e.target.value })
                   }
                 />
                 <Button className="w-full" onClick={handleCheckout}>
