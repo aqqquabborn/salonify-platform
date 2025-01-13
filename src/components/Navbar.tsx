@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, User } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { AuthDialog } from "./AuthDialog";
 
 export const Navbar = () => {
-  // Временно хардкодим для демонстрации
+  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
   const isAdmin = false;
 
   return (
@@ -17,6 +17,7 @@ export const Navbar = () => {
         <div className="ml-auto flex items-center space-x-4">
           <Link to="/products">Продукты</Link>
           <Link to="/categories">Категории</Link>
+          {isAuthenticated && <Link to="/order-history">История заказов</Link>}
           {isAdmin && <Link to="/admin">Админ панель</Link>}
           <AuthDialog />
           <Link to="/cart">

@@ -15,6 +15,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { useNavigate } from "react-router-dom";
 
 export const AuthDialog = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -23,6 +24,7 @@ export const AuthDialog = () => {
   const [showOTP, setShowOTP] = useState(false);
   const [otp, setOtp] = useState("");
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,14 +40,18 @@ export const AuthDialog = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    // В реальном приложении здесь будет проверка учетных данных
+    localStorage.setItem("isAuthenticated", "true");
     toast({
       title: "Успешный вход",
       description: "Добро пожаловать в систему!",
     });
+    navigate("/order-history");
   };
 
   const handleOTPSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    localStorage.setItem("isAuthenticated", "true");
     toast({
       title: "Регистрация завершена",
       description: "Вы успешно зарегистрировались!",
@@ -113,15 +119,17 @@ export const AuthDialog = () => {
               required
             />
           </div>
-          <div className="space-y-2">
-            <Input
-              type="password"
-              placeholder="Пароль"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+          {isLogin && (
+            <div className="space-y-2">
+              <Input
+                type="password"
+                placeholder="Пароль"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+          )}
           <div className="flex justify-between items-center">
             <Button
               type="button"
